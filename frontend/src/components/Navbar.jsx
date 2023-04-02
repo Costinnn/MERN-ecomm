@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -75,6 +77,7 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const quantity = useSelector((state) => state.cart.quantity);
   return (
     <Container>
       <Wrapper>
@@ -91,9 +94,12 @@ const Navbar = () => {
         <Right>
           <MenuItem>Register</MenuItem>
           <MenuItem>Sign in</MenuItem>
-          <MenuItem>
-            <span className="material-symbols-outlined">shopping_cart</span>
-          </MenuItem>
+          <Link to='/cart'>
+            <MenuItem>
+              <span className="material-symbols-outlined">shopping_cart</span>
+              <span>{quantity}</span>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

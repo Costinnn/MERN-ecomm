@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 //routes imp
 const userRoutes = require("./routes/userRoute");
@@ -11,7 +12,7 @@ const orderRoutes = require("./routes/orderRoute");
 
 const app = express();
 app.use(express.json()); // for sending json data
-
+app.use(cors());// to allow fetch fron frontend
 app.use("/api/users", userRoutes); // user/:id or stats
 app.use("/api/auth", authRoutes); // register or login
 app.use("/api/products", productRoutes); // find/:id

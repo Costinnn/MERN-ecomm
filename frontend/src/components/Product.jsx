@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Info = styled.div`
@@ -68,7 +69,7 @@ const Product = ({ item }) => {
       <Image src={item.img} />
       <Info>
         <Icon className="material-symbols-outlined">shopping_cart</Icon>
-        <Icon className="material-symbols-outlined">search</Icon>
+        <Icon className="material-symbols-outlined"><Link to={`/product/${item._id}`}>search</Link></Icon>
         <Icon className="material-symbols-outlined">favorite</Icon>
       </Info>
     </Container>

@@ -5,9 +5,20 @@ import Product from "./pages/Product";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  return <Home />;
+  const user = true;
+  return (
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="/products/:category" element={<ProductList />} />
+      <Route path="/product/:id" element={<Product />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/login" element={user ? <Home /> : <Login />} />
+      <Route path="/register" element={user ? <Home /> : <Register />} />
+    </Routes>
+  );
 }
 
 export default App;
