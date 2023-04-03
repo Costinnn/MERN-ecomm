@@ -4,6 +4,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -59,7 +60,6 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
-  
 `;
 const Image = styled.img`
   width: 200px;
@@ -145,6 +145,8 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Container>
       <Navbar />
@@ -161,32 +163,34 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://images.pexels.com/photos/3399995/pexels-photo-3399995.jpeg?auto=compress&cs=tinysrgb&w=400" />
-                <Details>
-                  <ProductName>Product: TSHIRT</ProductName>
-                  <ProductId>ID: 20202</ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>Size: S</ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Remove>-</Remove>
-                  <Amount>1</Amount>
-                  <Add>+</Add>
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products.map((product) => (
+              <Product key={product._id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>Product:{product.title} </ProductName>
+                    <ProductId>ID: {product._id}</ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>Size: {product.size}</ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Remove>-</Remove>
+                    <Amount>{product.quantity}</Amount>
+                    <Add>+</Add>
+                  </ProductAmountContainer>
+                  <ProductPrice>$ {product.title}</ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <Hr />
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -198,7 +202,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 5.80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <Button>ChHECKOUT NOW</Button>
           </Summary>
